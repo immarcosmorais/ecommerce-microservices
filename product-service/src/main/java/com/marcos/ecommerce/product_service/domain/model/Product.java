@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import static com.marcos.ecommerce.product_service.domain.model.ValidateFields.*;
 
-
 public class Product extends AbstractModel {
 
     private String name;

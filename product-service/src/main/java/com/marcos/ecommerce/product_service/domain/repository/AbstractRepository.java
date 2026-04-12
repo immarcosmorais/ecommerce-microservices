@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface AbstractRepository <T>{
 
-    T save(T entity);
+    T save(T domain);
     Optional<T> findById(Long id);
     List<T> findAll();
     void deleteById(Long id);
