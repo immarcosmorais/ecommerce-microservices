@@ -75,7 +75,4 @@ public class Product extends AbstractModel {
         return description;
     }
 
-    public void setId(long id){
-        this.id = id;
-    }
 }
