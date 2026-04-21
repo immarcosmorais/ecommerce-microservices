@@ -4,10 +4,16 @@ server:
 spring:
   application:
     name: config-server
+  profiles:
+    active: native
   cloud:
     config:
+## Usando as configuraçoes locais
       server:
-        git:
-          uri: https://github.com/immarcosmorais/ecommerce-config
-          default-label: main
-          clone-on-start: true
+        native:
+          search-locations: file:../ecommerce-config/, file:./ecommerce-config/
+## Usando as configuracoes do
+#      git:
+#        uri: https://github.com/immarcosmorais/ecommerce-config
+#        default-label: main
+#        clone-on-start: true
