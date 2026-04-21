@@ -22,7 +22,7 @@ public class Product extends AbstractModel {
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
     public void updateDetails(String name, String description, BigDecimal price){

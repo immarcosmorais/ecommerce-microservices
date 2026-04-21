@@ -1,4 +1,4 @@
-package com.marcos.ecommerce.product_service.infrastructure.persistence;
+package com.marcos.ecommerce.order_service.infrastructure.persistence;
 
 import jakarta.persistence.*;
 

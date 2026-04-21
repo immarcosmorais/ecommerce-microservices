@@ -2,6 +2,7 @@ package com.marcos.ecommerce.order_service.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order extends AbstractModel{
@@ -79,6 +80,10 @@ public class Order extends AbstractModel{
     public Order(Long customerId) {
         ValidateFields.validateId(customerId, "customerId");
         this.customerId = customerId;
+        this.items = new ArrayList<>();
+        this.status = OrderStatus.PENDING;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
     public Long getCustomerId() {
@@ -95,4 +100,7 @@ public class Order extends AbstractModel{
     }
 
 
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
 }

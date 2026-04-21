@@ -12,23 +12,23 @@ import org.springframework.context.annotation.Configuration;
 public class UseCaseConfig {
 
     @Bean
-    public CreateProductUseCase createProductUseCase(ProductRepository productRepository) {
-        return new CreateProductUseCase(productRepository);
+    public CreateProductUseCase createProductUseCase(ProductRepository repository) {
+        return new CreateProductUseCase(repository);
     }
 
     @Bean
-    public GetProductUseCase getProductUseCase(ProductRepository productRepository) {
-        return new GetProductUseCase(productRepository);
+    public GetProductUseCase getProductUseCase(ProductRepository repository) {
+        return new GetProductUseCase(repository);
     }
 
     @Bean
-    public UpdateProductUseCase updateProductUseCase(ProductRepository productRepository) {
-        return new UpdateProductUseCase(productRepository);
+    public UpdateProductUseCase updateProductUseCase(ProductRepository repository) {
+        return new UpdateProductUseCase(repository);
     }
 
     @Bean
-    public DeleteProductUseCase deleteProductUseCase(ProductRepository productRepository) {
-        return new DeleteProductUseCase(productRepository);
+    public DeleteProductUseCase deleteProductUseCase(ProductRepository repository) {
+        return new DeleteProductUseCase(repository);
     }
 
 }
