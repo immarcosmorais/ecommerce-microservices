@@ -2,10 +2,10 @@ package com.marcos.ecommerce.product_service.infrastructure.rest;
 
 import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
-import com.marcos.ecommerce.product_service.application.usercase.CreateProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.DeleteProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.GetProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.UpdateProductUseCase;
+import com.marcos.ecommerce.product_service.application.usecase.CreateProductUseCase;
+import com.marcos.ecommerce.product_service.application.usecase.DeleteProductUseCase;
+import com.marcos.ecommerce.product_service.application.usecase.GetProductUseCase;
+import com.marcos.ecommerce.product_service.application.usecase.UpdateProductUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

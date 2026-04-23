@@ -1,16 +1,19 @@
 package com.marcos.ecommerce.order_service.domain.event;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.List;
 
 public record OrderCreatedEvent(
         Long orderId,
         Long customerId,
-        BigDecimal total,
-        int totalItems,
-        LocalDateTime occurredAt
+        List<OrderItemEventDto> items,
+        BigDecimal totalAmount
 ) {
-    public OrderCreatedEvent(Long orderId, Long customerId, BigDecimal total, int totalItems) {
-        this(orderId, customerId, total, totalItems, LocalDateTime.now());
+    public record OrderItemEventDto(
+            Long productId,
+            String productName,
+            Integer quantity,
+            BigDecimal unitPrice
+    ) {
     }
 }

@@ -1,9 +1,6 @@
 package com.marcos.ecommerce.product_service.infrastructure.config;
 
-import com.marcos.ecommerce.product_service.application.usercase.CreateProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.DeleteProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.GetProductUseCase;
-import com.marcos.ecommerce.product_service.application.usercase.UpdateProductUseCase;
+import com.marcos.ecommerce.product_service.application.usecase.*;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +26,11 @@ public class UseCaseConfig {
     @Bean
     public DeleteProductUseCase deleteProductUseCase(ProductRepository repository) {
         return new DeleteProductUseCase(repository);
+    }
+
+    @Bean
+    public DecreaseStockUseCase decreaseStockUseCase(ProductRepository repository) {
+        return new DecreaseStockUseCase(repository);
     }
 
 }

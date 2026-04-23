@@ -3,6 +3,7 @@ package com.marcos.ecommerce.order_service.infrastructure.config;
 import com.marcos.ecommerce.order_service.application.usecase.CancelOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.CreateOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.GetOrderUseCase;
+import com.marcos.ecommerce.order_service.domain.event.OrderEventPublisher;
 import com.marcos.ecommerce.order_service.domain.repository.OrderRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class UseCaseConfig {
 
     @Bean
-    public CreateOrderUseCase createOrderUseCase(OrderRepository repository) {
-        return new CreateOrderUseCase(repository);
+    public CreateOrderUseCase createOrderUseCase(OrderRepository repository, OrderEventPublisher eventPublisher) {
+        return new CreateOrderUseCase(repository, eventPublisher);
     }
 
     @Bean

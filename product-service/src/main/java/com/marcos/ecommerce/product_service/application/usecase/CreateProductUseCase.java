@@ -1,4 +1,4 @@
-package com.marcos.ecommerce.product_service.application.usercase;
+package com.marcos.ecommerce.product_service.application.usecase;
 
 import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;

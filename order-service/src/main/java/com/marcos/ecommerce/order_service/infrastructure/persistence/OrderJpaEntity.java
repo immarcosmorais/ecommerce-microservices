@@ -18,7 +18,7 @@ public class OrderJpaEntity extends AbstractEntity {
     @Column(nullable = false)
     private OrderStatus status;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private List<OrderItemJpaEntity> items = new ArrayList<>();
 
