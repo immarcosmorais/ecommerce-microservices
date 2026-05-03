@@ -1,5 +1,6 @@
 package com.marcos.ecommerce.product_service.infrastructure.rest;
 
+import com.marcos.ecommerce.product_service.application.dto.PagedResponse;
 import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.application.usecase.CreateProductUseCase;
@@ -12,6 +13,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,13 +82,30 @@ public class ProductController {
         return  ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Listar todos os produtos", description = "Retorna a lista completa de produtos do catálogo")
-    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
+    @Operation(
+            summary = "Listar produtos paginados",
+            description = "Retorna produtos com suporte a paginação. " +
+                    "Parâmetros: page (default 0), size (default 10), sort (ex: name,asc)"
+    )
+    @ApiResponse(responseCode = "200", description = "Página retornada com sucesso")
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> findAll(){
-        List<ProductResponse> response = getProductUseCase.findAll();
-        return  ResponseEntity.ok(response);
+    public ResponseEntity<PagedResponse<ProductResponse>> findAll(
+            @ParameterObject @PageableDefault(size = 10, sort = "id") Pageable pageable
+    ) {
+        PagedResponse<ProductResponse> response = getProductUseCase.findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize()
+        );
+        return ResponseEntity.ok(response);
     }
+
+//    @Operation(summary = "Listar todos os produtos", description = "Retorna a lista completa de produtos do catálogo")
+//    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
+//    @GetMapping
+//    public ResponseEntity<List<ProductResponse>> findAll(){
+//        List<ProductResponse> response = getProductUseCase.findAll();
+//        return  ResponseEntity.ok(response);
+//    }
 
     @Operation(summary = "Atualizar produto", description = "Atualiza os dados de um produto existente")
     @ApiResponses({

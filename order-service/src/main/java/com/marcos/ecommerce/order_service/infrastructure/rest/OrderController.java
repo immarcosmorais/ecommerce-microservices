@@ -2,6 +2,7 @@ package com.marcos.ecommerce.order_service.infrastructure.rest;
 
 import com.marcos.ecommerce.order_service.application.dto.CreateOrderRequest;
 import com.marcos.ecommerce.order_service.application.dto.OrderResponse;
+import com.marcos.ecommerce.order_service.application.dto.PagedResponse;
 import com.marcos.ecommerce.order_service.application.usecase.CancelOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.CreateOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.GetOrderUseCase;
@@ -11,6 +12,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,11 +65,21 @@ public class OrderController {
         return ResponseEntity.ok(getOrderUseCase.findById(id));
     }
 
-    @Operation(summary = "Listar todos os pedidos", description = "Retorna todos os pedidos cadastrados")
-    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
+    @Operation(
+            summary = "Listar pedidos paginados",
+            description = "Retorna pedidos com suporte a paginação. " +
+                    "Parâmetros: page (default 0), size (default 10), sort (ex: createdAt,desc)"
+    )
+    @ApiResponse(responseCode = "200", description = "Página retornada com sucesso")
     @GetMapping
-    public ResponseEntity<List<OrderResponse>> findAll() {
-        return ResponseEntity.ok(getOrderUseCase.findAll());
+    public ResponseEntity<PagedResponse<OrderResponse>> findAll(
+            @ParameterObject @PageableDefault(size = 10, sort = "id") Pageable pageable
+    ) {
+        PagedResponse<OrderResponse> response = getOrderUseCase.findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Buscar pedidos por cliente", description = "Retorna todos os pedidos de um cliente específico")

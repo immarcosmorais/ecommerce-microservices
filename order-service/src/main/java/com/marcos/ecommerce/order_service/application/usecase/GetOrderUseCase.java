@@ -5,6 +5,9 @@ import com.marcos.ecommerce.order_service.application.mapper.OrderMapper;
 import com.marcos.ecommerce.order_service.domain.exception.OrderNotFoundException;
 import com.marcos.ecommerce.order_service.domain.model.Order;
 import com.marcos.ecommerce.order_service.domain.repository.OrderRepository;
+import com.marcos.ecommerce.order_service.application.dto.PagedResponse;
+
+import com.marcos.ecommerce.order_service.domain.model.PageResult;
 
 import java.util.List;
 
@@ -22,10 +25,16 @@ public class GetOrderUseCase {
         return OrderMapper.toResponse(order);
     }
 
-    public List<OrderResponse> findAll() {
-        return orderRepository.findAll().stream()
-                .map(OrderMapper::toResponse)
-                .toList();
+    public PagedResponse<OrderResponse> findAll(int page, int size) {
+        PageResult<Order> pageResult = orderRepository.findAll(page, size);
+        PageResult<OrderResponse> mapped = new PageResult<>(
+                pageResult.content().stream().map(OrderMapper::toResponse).toList(),
+                pageResult.page(),
+                pageResult.size(),
+                pageResult.totalElements(),
+                pageResult.totalPages()
+        );
+        return PagedResponse.from(mapped);
     }
 
     public List<OrderResponse> findByCustomerId(Long customerId) {
