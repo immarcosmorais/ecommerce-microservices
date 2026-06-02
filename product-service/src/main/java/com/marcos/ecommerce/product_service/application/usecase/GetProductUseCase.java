@@ -7,9 +7,6 @@ import com.marcos.ecommerce.product_service.domain.exception.ProductNotFoundExce
 import com.marcos.ecommerce.product_service.domain.model.PageResult;
 import com.marcos.ecommerce.product_service.domain.model.Product;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public class GetProductUseCase {
 
@@ -19,12 +16,13 @@ public class GetProductUseCase {
         this.productRepository = productRepository;
     }
 
-    public ProductResponse finById(long id){
-        Product product = this.productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    public ProductResponse findById(long id) {
+        Product product = this.productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
         return ProductMapper.toResponse(product);
     }
 
-    public PagedResponse<ProductResponse> findAll(int page, int size){
+    public PagedResponse<ProductResponse> findAll(int page, int size) {
         PageResult<Product> pageResult = this.productRepository.findAll(page, size);
         PageResult<ProductResponse> mapped = new PageResult<>(
                 pageResult.content().stream().map(ProductMapper::toResponse).toList(),
@@ -35,5 +33,4 @@ public class GetProductUseCase {
         );
         return PagedResponse.from(mapped);
     }
-
 }

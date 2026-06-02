@@ -6,16 +6,16 @@ import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
 
 public class DecreaseStockUseCase {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
 
-    public DecreaseStockUseCase(ProductRepository repository) {
-        this.repository = repository;
+    public DecreaseStockUseCase(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     public void execute(Long productId, int quantity) {
-        Product product = this.repository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
+        Product product = this.productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
         product.decreaseStock(quantity);
-        this.repository.save(product);
+        this.productRepository.save(product);
     }
-
 }
