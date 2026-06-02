@@ -2,6 +2,9 @@ package com.marcos.ecommerce.order_service.infrastructure.persistence;
 
 import com.marcos.ecommerce.order_service.domain.model.Order;
 import com.marcos.ecommerce.order_service.domain.repository.OrderRepository;
+import com.marcos.ecommerce.order_service.domain.model.PageResult;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,8 +37,17 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAll() {
-        return repository.findAll().stream().map(OrderJpaEntity::toDomain).toList();
+    public PageResult<Order> findAll(int page, int size) {
+        Page<OrderJpaEntity> springPage = repository.findAll(PageRequest.of(page, size));
+        List<Order> content = springPage.getContent().stream().map(OrderJpaEntity::toDomain).toList();
+
+        return new PageResult<>(
+                content,
+                springPage.getNumber(),
+                springPage.getSize(),
+                springPage.getTotalElements(),
+                springPage.getTotalPages()
+        );
     }
 
     @Override
