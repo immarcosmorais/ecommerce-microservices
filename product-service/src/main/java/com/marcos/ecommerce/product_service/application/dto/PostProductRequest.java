@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Schema(description = "Dados para criação ou atualização de produto")
-public record ProductRequest(
+public record PostProductRequest(
 
         @NotBlank(message = "O nome do produto é obrigatório")
         @Size(max = 255, message = "O nome não pode exceder 255 caracteres")

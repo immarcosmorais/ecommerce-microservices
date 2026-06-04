@@ -1,8 +1,9 @@
 package com.marcos.ecommerce.product_service.infrastructure.rest;
 
 import com.marcos.ecommerce.product_service.application.dto.PagedResponse;
-import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
+import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
+import com.marcos.ecommerce.product_service.application.dto.PutProductRequest;
 import com.marcos.ecommerce.product_service.application.usecase.CreateProductUseCase;
 import com.marcos.ecommerce.product_service.application.usecase.DeleteProductUseCase;
 import com.marcos.ecommerce.product_service.application.usecase.GetProductUseCase;
@@ -53,7 +54,7 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody PostProductRequest request) {
         ProductResponse response = this.createProductUseCase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -101,7 +102,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> update(
             @PathVariable long id,
-            @Valid @RequestBody ProductRequest request
+            @Valid @RequestBody PutProductRequest request
     ) {
         ProductResponse response = this.updateProductUseCase.execute(id, request);
         return ResponseEntity.ok(response);

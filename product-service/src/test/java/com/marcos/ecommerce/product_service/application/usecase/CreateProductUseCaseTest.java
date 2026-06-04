@@ -1,6 +1,6 @@
 package com.marcos.ecommerce.product_service.application.usecase;
 
-import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
+import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.domain.model.Product;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
@@ -39,8 +39,8 @@ class CreateProductUseCaseTest {
         return product;
     }
 
-    public static ProductRequest buildRequest() {
-        return new ProductRequest("Notebook", "Desc", new BigDecimal("5000.00"), 10);
+    public static PostProductRequest buildRequest() {
+        return new PostProductRequest("Notebook", "Desc", new BigDecimal("5000.00"), 10);
     }
 
     @Test
@@ -49,7 +49,7 @@ class CreateProductUseCaseTest {
         // Arrange
         Product savedProduct = buildProduct();
         when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
-        ProductRequest request = buildRequest();
+        PostProductRequest request = buildRequest();
 
         // Act
         ProductResponse response = useCase.execute(request);
@@ -67,7 +67,7 @@ class CreateProductUseCaseTest {
     @DisplayName("deve chamar repository.save exatamente uma vez sem mais interações")
     void shouldCallSaveExactlyOnce() {
         // Arrange
-        ProductRequest request = buildRequest();
+        PostProductRequest request = buildRequest();
         Product savedProduct = buildProduct();
         when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
 

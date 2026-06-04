@@ -1,6 +1,6 @@
 package com.marcos.ecommerce.product_service.application.usecase;
 
-import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
+import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.application.mapper.ProductMapper;
 import com.marcos.ecommerce.product_service.domain.model.Product;
@@ -14,7 +14,7 @@ public class CreateProductUseCase {
         this.productRepository = productRepository;
     }
 
-    public ProductResponse execute(ProductRequest request){
+    public ProductResponse execute(PostProductRequest request){
         Product product = ProductMapper.toDomain(request);
         Product saved = productRepository.save(product);
         return ProductMapper.toResponse(saved);

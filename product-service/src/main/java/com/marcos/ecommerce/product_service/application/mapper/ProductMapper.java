@@ -1,6 +1,6 @@
 package com.marcos.ecommerce.product_service.application.mapper;
 
-import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
+import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.domain.model.Product;
 
@@ -8,7 +8,7 @@ public class ProductMapper {
 
     private ProductMapper(){}
 
-    public static Product toDomain(ProductRequest request){
+    public static Product toDomain(PostProductRequest request){
         return new Product(
                 request.name(),
                 request.description(),

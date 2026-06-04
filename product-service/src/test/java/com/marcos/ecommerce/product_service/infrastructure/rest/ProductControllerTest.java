@@ -2,7 +2,7 @@ package com.marcos.ecommerce.product_service.infrastructure.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcos.ecommerce.product_service.application.dto.PagedResponse;
-import com.marcos.ecommerce.product_service.application.dto.ProductRequest;
+import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.application.usecase.*;
 import com.marcos.ecommerce.product_service.domain.exception.ProductNotFoundException;
@@ -66,7 +66,7 @@ class ProductControllerTest {
     @DisplayName("POST /api/products — deve criar produto e retornar 201 com body correto")
     void shouldCreateProductAndReturn201() throws Exception {
         // Arrange
-        ProductRequest request = new ProductRequest("Notebook", "Desc", new BigDecimal("999.99"), 10);
+        PostProductRequest request = new PostProductRequest("Notebook", "Desc", new BigDecimal("999.99"), 10);
         ProductResponse response = buildResponse(1L, "Notebook");
         when(createProductUseCase.execute(any())).thenReturn(response);
 
@@ -84,7 +84,7 @@ class ProductControllerTest {
     @DisplayName("POST /api/products — deve retornar 400 quando nome é nulo ou vazio")
     void shouldReturn400WhenNameIsBlank() throws Exception {
         // Arrange — request com nome em branco dispara @NotBlank
-        ProductRequest invalidRequest = new ProductRequest("", "Desc", new BigDecimal("999.99"), 10);
+        PostProductRequest invalidRequest = new PostProductRequest("", "Desc", new BigDecimal("999.99"), 10);
 
         // Act + Assert — @Valid + GlobalExceptionHandler retornam 400 com detalhes
         mockMvc.perform(post("/api/products")
@@ -102,7 +102,7 @@ class ProductControllerTest {
     @DisplayName("POST /api/products — deve retornar 400 quando preço é nulo")
     void shouldReturn400WhenPriceIsNull() throws Exception {
         // Arrange — price null dispara @NotNull
-        ProductRequest invalidRequest = new ProductRequest("Notebook", "Desc", null, 10);
+        PostProductRequest invalidRequest = new PostProductRequest("Notebook", "Desc", null, 10);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ class ProductControllerTest {
     @DisplayName("POST /api/products — deve retornar 400 quando estoque é nulo")
     void shouldReturn400WhenStockQuantityIsNull() throws Exception {
         // Arrange — stockQuantity null dispara @NotNull
-        ProductRequest invalidRequest = new ProductRequest("Notebook", "Desc", new BigDecimal("999.99"), null);
+        PostProductRequest invalidRequest = new PostProductRequest("Notebook", "Desc", new BigDecimal("999.99"), null);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -185,7 +185,7 @@ class ProductControllerTest {
     @DisplayName("PUT /api/products/{id} — deve atualizar produto e retornar 200")
     void shouldUpdateProductAndReturn200() throws Exception {
         // Arrange
-        ProductRequest request = new ProductRequest("Novo Nome", "Nova Desc", new BigDecimal("1999.99"), 5);
+        PostProductRequest request = new PostProductRequest("Novo Nome", "Nova Desc", new BigDecimal("1999.99"), 5);
         ProductResponse response = buildResponse(1L, "Novo Nome");
         when(updateProductUseCase.execute(eq(1L), any())).thenReturn(response);
 
@@ -201,7 +201,7 @@ class ProductControllerTest {
     @DisplayName("PUT /api/products/{id} — deve retornar 400 quando dados são inválidos")
     void shouldReturn400WhenUpdateRequestIsInvalid() throws Exception {
         // Arrange — preço negativo dispara @Positive
-        ProductRequest invalidRequest = new ProductRequest("Produto", "Desc", new BigDecimal("-1.00"), 5);
+        PostProductRequest invalidRequest = new PostProductRequest("Produto", "Desc", new BigDecimal("-1.00"), 5);
 
         mockMvc.perform(put("/api/products/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -216,7 +216,7 @@ class ProductControllerTest {
     @DisplayName("PUT /api/products/{id} — deve retornar 404 quando produto não existe")
     void shouldReturn404WhenUpdatingNonExistentProduct() throws Exception {
         // Arrange
-        ProductRequest request = new ProductRequest("Nome", "Desc", new BigDecimal("100.00"), 1);
+        PostProductRequest request = new PostProductRequest("Nome", "Desc", new BigDecimal("100.00"), 1);
         when(updateProductUseCase.execute(eq(99L), any())).thenThrow(new ProductNotFoundException(99L));
 
         mockMvc.perform(put("/api/products/99")
