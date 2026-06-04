@@ -46,7 +46,7 @@ public class Order extends AbstractModel{
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public void changeStatus(OrderStatus newStatus) {
+    private void changeStatus(OrderStatus newStatus) {
         if (!this.status.canTransitionTo(newStatus)) {
             throw new IllegalStateException(
                     String.format("Cannot transition from %s to %s", this.status, newStatus)
