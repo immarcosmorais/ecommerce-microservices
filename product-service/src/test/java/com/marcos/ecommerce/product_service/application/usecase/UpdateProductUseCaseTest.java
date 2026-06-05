@@ -2,6 +2,7 @@ package com.marcos.ecommerce.product_service.application.usecase;
 
 import com.marcos.ecommerce.product_service.application.dto.PostProductRequest;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
+import com.marcos.ecommerce.product_service.application.dto.PutProductRequest;
 import com.marcos.ecommerce.product_service.domain.exception.ProductNotFoundException;
 import com.marcos.ecommerce.product_service.domain.model.Product;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
@@ -42,8 +43,12 @@ class UpdateProductUseCaseTest {
         return product;
     }
 
-    public static PostProductRequest buildRequest() {
+    public static PostProductRequest buildPostRequest() {
         return new PostProductRequest("Notebook", "Desc", new BigDecimal("5000.00"), 10);
+    }
+
+    public static PutProductRequest buildPutRequest() {
+        return new PutProductRequest("Notebook", "Desc", new BigDecimal("5000.00"));
     }
 
     @Test
@@ -51,7 +56,7 @@ class UpdateProductUseCaseTest {
     void shouldUpdateProductAndReturnResponse() {
         // Arrange
         Product productSaved = buildProduct() ;
-        PostProductRequest request = buildRequest();
+        PutProductRequest request = buildPutRequest();
         when(productRepository.findById(any())).thenReturn(Optional.of(productSaved));
         when(productRepository.save(any(Product.class))).thenReturn(productSaved);
 
@@ -73,7 +78,7 @@ class UpdateProductUseCaseTest {
         // Arrange — ArgumentCaptor inspeciona o produto passado ao save
         ArgumentCaptor<Product> captor = ArgumentCaptor.forClass(Product.class);
         Product existingProduct = buildProduct() ;
-        PostProductRequest request = new PostProductRequest("Teclado Mecânico", "Nova desc", new BigDecimal("799.00"), 5);
+        PutProductRequest request = new PutProductRequest("Teclado Mecânico", "Nova desc", new BigDecimal("799.00"));
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(existingProduct));
         when(productRepository.save(captor.capture())).thenReturn(existingProduct);
@@ -91,7 +96,7 @@ class UpdateProductUseCaseTest {
     @DisplayName("deve chamar findById e save exatamente uma vez cada")
     void shouldCallFindByIdAndSaveExactlyOnce() {
         // Arrange
-        PostProductRequest request = buildRequest();
+        PutProductRequest request = buildPutRequest();
         Product productSaved = buildProduct() ;
         when(productRepository.save(any(Product.class))).thenReturn(productSaved);
         when(productRepository.findById(any())).thenReturn(Optional.of(productSaved));
@@ -109,7 +114,7 @@ class UpdateProductUseCaseTest {
     @DisplayName("deve lançar ProductNotFoundException quando produto não existe e não chamar save")
     void shouldThrowProductNotFoundExceptionAndNeverSaveWhenProductDoesNotExist() {
         // Arrange
-        PostProductRequest request = buildRequest();
+        PutProductRequest request = buildPutRequest();
         when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Act + Assert
