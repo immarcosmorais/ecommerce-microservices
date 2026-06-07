@@ -1,0 +1,25 @@
+package com.marcos.ecommerce.orchestrator_service.domain.model;
+
+import java.time.LocalDateTime;
+
+public abstract class AbstractModel {
+    protected Long id;
+    protected LocalDateTime createdAt;
+    protected LocalDateTime updatedAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+}

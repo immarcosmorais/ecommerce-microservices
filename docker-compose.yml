@@ -25,6 +25,18 @@ services:
     volumes:
       - order-data:/var/lib/postgresql/data
 
+  saga-db:
+    image: postgres:16
+    container_name: saga-db
+    environment:
+      POSTGRES_DB: saga_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - saga-data:/var/lib/postgresql/data
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper
@@ -65,3 +77,4 @@ services:
 volumes:
   product-data:
   order-data:
+  saga-data:
