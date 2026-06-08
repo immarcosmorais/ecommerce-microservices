@@ -1,4 +1,4 @@
-package com.marcos.ecommerce.payment_service.domain.event;
+package com.marcos.ecommerce.orchestrator_service.application.messaging.event;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +12,7 @@ public record OrderCreatedEvent(
     public record OrderItemEventDto(
             Long productId,
             String productName,
-            Integer quantity,
+            int quantity,
             BigDecimal unitPrice
     ) {
     }

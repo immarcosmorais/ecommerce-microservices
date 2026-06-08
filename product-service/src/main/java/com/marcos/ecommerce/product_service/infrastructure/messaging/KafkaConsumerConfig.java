@@ -1,7 +1,7 @@
 package com.marcos.ecommerce.product_service.infrastructure.messaging;
 
 
-import com.marcos.ecommerce.product_service.domain.event.OrderCreatedEvent;
+import com.marcos.ecommerce.product_service.application.messaging.command.ReserveStockCommand;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +25,9 @@ public class KafkaConsumerConfig {
 
 
     @Bean
-    ConsumerFactory<String, OrderCreatedEvent> consumerFactory() {
-        JacksonJsonDeserializer<OrderCreatedEvent> deserializer = new JacksonJsonDeserializer<>(OrderCreatedEvent.class, false);
+    ConsumerFactory<String, ReserveStockCommand> consumerFactory() {
+        JacksonJsonDeserializer<ReserveStockCommand> deserializer =
+                new JacksonJsonDeserializer<>(ReserveStockCommand.class, false);
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "product-group");
@@ -37,9 +38,8 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent>
-    kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, OrderCreatedEvent> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, ReserveStockCommand> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ReserveStockCommand> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
