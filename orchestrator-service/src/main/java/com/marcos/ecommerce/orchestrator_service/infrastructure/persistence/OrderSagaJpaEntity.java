@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "order_saga")
 public class OrderSagaJpaEntity extends AbstractEntity {
 
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "order_id", nullable = false, unique = true)
     private Long orderId;
 
     @Enumerated(EnumType.STRING)
@@ -20,10 +20,12 @@ public class OrderSagaJpaEntity extends AbstractEntity {
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
-    protected OrderSagaJpaEntity() {}
+    protected OrderSagaJpaEntity() {
+    }
 
     public static OrderSagaJpaEntity fromDomain(OrderSaga orderSaga) {
         OrderSagaJpaEntity sagaJpaEntity = new OrderSagaJpaEntity();
+        sagaJpaEntity.id = orderSaga.getId();
         sagaJpaEntity.orderId = orderSaga.getOrderId();
         sagaJpaEntity.status = orderSaga.getStatus();
         sagaJpaEntity.createdAt = orderSaga.getCreatedAt();

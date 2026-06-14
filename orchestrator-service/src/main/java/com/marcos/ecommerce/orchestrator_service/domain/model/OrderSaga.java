@@ -3,11 +3,11 @@ package com.marcos.ecommerce.orchestrator_service.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OrderSaga extends AbstractModel{
+public class OrderSaga extends AbstractModel {
 
-    private Long orderId;
+    private final Long orderId;
     private SagaStatus status;
-    private BigDecimal totalAmount;
+    private final BigDecimal totalAmount;
 
     public OrderSaga(Long orderId, BigDecimal totalAmount) {
         this.orderId = orderId;
@@ -25,9 +25,9 @@ public class OrderSaga extends AbstractModel{
         this.updatedAt = LocalDateTime.now();
     }
 
-    private void transitionTo(SagaStatus target, SagaStatus... allowedFrom){
-        for(SagaStatus from : allowedFrom){
-            if(this.status == from){
+    private void transitionTo(SagaStatus target, SagaStatus... allowedFrom) {
+        for (SagaStatus from : allowedFrom) {
+            if (this.status == from) {
                 this.status = target;
                 this.updatedAt = LocalDateTime.now();
                 return;
@@ -40,15 +40,15 @@ public class OrderSaga extends AbstractModel{
         transitionTo(SagaStatus.STOCK_RESERVED, SagaStatus.STARTED);
     }
 
-    public void markPaid(){
+    public void markPaid() {
         transitionTo(SagaStatus.PAID, SagaStatus.STOCK_RESERVED);
     }
 
-    public void startCompensation(){
+    public void startCompensation() {
         transitionTo(SagaStatus.COMPENSATING, SagaStatus.STOCK_RESERVED, SagaStatus.PAID);
     }
 
-    public void cancel(){
+    public void cancel() {
         transitionTo(SagaStatus.CANCELLED, SagaStatus.COMPENSATING, SagaStatus.STARTED);
     }
 
