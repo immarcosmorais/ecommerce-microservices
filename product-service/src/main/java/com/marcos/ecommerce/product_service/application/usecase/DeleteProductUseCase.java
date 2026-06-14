@@ -11,8 +11,8 @@ public class DeleteProductUseCase {
         this.productRepository = productRepository;
     }
 
-    public void execute(Long id){
-        if(!this.productRepository.existsById(id)){
+    public void execute(Long id) {
+        if (!this.productRepository.existsById(id)) {
             throw new ProductNotFoundException(id);
         }
         productRepository.deleteById(id);

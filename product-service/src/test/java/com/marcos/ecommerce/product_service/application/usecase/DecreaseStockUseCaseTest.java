@@ -3,7 +3,6 @@ package com.marcos.ecommerce.product_service.application.usecase;
 import com.marcos.ecommerce.product_service.domain.exception.ProductNotFoundException;
 import com.marcos.ecommerce.product_service.domain.model.Product;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
-import com.marcos.ecommerce.product_service.util.ProductCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

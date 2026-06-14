@@ -6,9 +6,10 @@ import com.marcos.ecommerce.product_service.domain.model.Product;
 
 public class ProductMapper {
 
-    private ProductMapper(){}
+    private ProductMapper() {
+    }
 
-    public static Product toDomain(PostProductRequest request){
+    public static Product toDomain(PostProductRequest request) {
         return new Product(
                 request.name(),
                 request.description(),
@@ -17,7 +18,7 @@ public class ProductMapper {
         );
     }
 
-    public static ProductResponse toResponse(Product product){
+    public static ProductResponse toResponse(Product product) {
         return new ProductResponse(
                 product.getId(),
                 product.getName(),

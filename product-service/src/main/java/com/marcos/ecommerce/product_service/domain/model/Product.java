@@ -2,6 +2,7 @@ package com.marcos.ecommerce.product_service.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import static com.marcos.ecommerce.product_service.domain.model.ValidateFields.*;
 
 public class Product extends AbstractModel {
@@ -11,7 +12,8 @@ public class Product extends AbstractModel {
     private BigDecimal price;
     private Integer stockQuantity;
 
-    protected Product() {}
+    protected Product() {
+    }
 
     public Product(String name, String description, BigDecimal price, Integer stockQuantity) {
         validateString(name, "name");
@@ -25,7 +27,7 @@ public class Product extends AbstractModel {
         this.updatedAt = this.createdAt;
     }
 
-    public void updateDetails(String name, String description, BigDecimal price){
+    public void updateDetails(String name, String description, BigDecimal price) {
         validateString(name, "name");
         validateBigDecimal(price, "price");
         this.name = name;
@@ -34,11 +36,11 @@ public class Product extends AbstractModel {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void decreaseStock(int quantity){
-        if (quantity < 1){
+    public void decreaseStock(int quantity) {
+        if (quantity < 1) {
             throw new IllegalArgumentException("Quantity must be greater than zero");
         }
-        if (this.stockQuantity < quantity){
+        if (this.stockQuantity < quantity) {
             throw new IllegalStateException(
                     String.format("Insufficient stock. Available %d. Requested: %d", this.stockQuantity, quantity)
             );
@@ -47,15 +49,15 @@ public class Product extends AbstractModel {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void increaseStock(int quantity){
-        if (quantity < 1){
+    public void increaseStock(int quantity) {
+        if (quantity < 1) {
             throw new IllegalArgumentException("Quantity must be greater than zero");
         }
         this.stockQuantity += quantity;
         this.updatedAt = LocalDateTime.now();
     }
 
-    public boolean isAvailable(){
+    public boolean isAvailable() {
         return this.stockQuantity > 0;
     }
 

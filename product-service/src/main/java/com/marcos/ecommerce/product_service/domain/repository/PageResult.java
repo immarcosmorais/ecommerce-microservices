@@ -1,23 +1,23 @@
-package com.marcos.ecommerce.product_service.domain.model;
+package com.marcos.ecommerce.product_service.domain.repository;
 
 import java.util.List;
 
-public record PageResult <T>(
+public record PageResult<T>(
         List<T> content,
         int page,
         int size,
         long totalElements,
         int totalPages
-){
-    public boolean isFirst(){
+) {
+    public boolean isFirst() {
         return page == 0;
     }
 
-    public boolean isLast(){
+    public boolean isLast() {
         return page >= totalPages - 1;
     }
 
-    public boolean hasNext(){
+    public boolean hasNext() {
         return page < totalPages - 1;
     }
 
