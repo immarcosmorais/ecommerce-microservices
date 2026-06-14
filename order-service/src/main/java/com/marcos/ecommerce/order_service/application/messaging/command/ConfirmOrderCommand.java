@@ -1,4 +1,4 @@
 package com.marcos.ecommerce.order_service.application.messaging.command;
 
-public record ConfirmOrderCommand() {
+public record ConfirmOrderCommand(Long orderId) {
 }

@@ -10,5 +10,6 @@ public record CreateOrderRequest(
         Long customerId,
         @Schema(description = "Lista de itens do pedido", requiredMode = Schema.RequiredMode.REQUIRED)
         List<OrderItemRequest> items
-) {}
+) {
+}
 

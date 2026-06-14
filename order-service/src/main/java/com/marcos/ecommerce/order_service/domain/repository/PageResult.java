@@ -1,4 +1,4 @@
-package com.marcos.ecommerce.order_service.domain.model;
+package com.marcos.ecommerce.order_service.domain.repository;
 
 import java.util.List;
 

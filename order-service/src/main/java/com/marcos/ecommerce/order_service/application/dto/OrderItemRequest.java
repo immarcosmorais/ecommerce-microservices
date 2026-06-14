@@ -7,4 +7,5 @@ public record OrderItemRequest(
         String productName,
         Integer quantity,
         BigDecimal unitPrice
-) {}
+) {
+}

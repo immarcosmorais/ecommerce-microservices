@@ -1,4 +1,4 @@
-package com.marcos.ecommerce.order_service.application.usercase;
+package com.marcos.ecommerce.order_service.application.usecase;
 
 import com.marcos.ecommerce.order_service.domain.exception.OrderNotFoundException;
 import com.marcos.ecommerce.order_service.domain.model.Order;
@@ -13,7 +13,7 @@ public class ConfirmOrderUseCase {
     }
 
     public void execute(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(()-> new OrderNotFoundException(orderId));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
         order.confirm();
         orderRepository.save(order);
     }

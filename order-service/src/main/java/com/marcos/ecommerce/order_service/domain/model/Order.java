@@ -5,13 +5,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order extends AbstractModel{
+public class Order extends AbstractModel {
 
     private Long customerId;
     private OrderStatus status;
     private List<OrderItem> items;
 
-    protected Order(){}
+    protected Order() {
+    }
 
     public void addItem(Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
         if (status != OrderStatus.PENDING) {

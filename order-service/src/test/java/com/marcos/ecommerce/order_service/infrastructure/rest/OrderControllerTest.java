@@ -2,7 +2,9 @@ package com.marcos.ecommerce.order_service.infrastructure.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcos.ecommerce.order_service.application.dto.*;
-import com.marcos.ecommerce.order_service.application.usecase.*;
+import com.marcos.ecommerce.order_service.application.usecase.CancelOrderUseCase;
+import com.marcos.ecommerce.order_service.application.usecase.CreateOrderUseCase;
+import com.marcos.ecommerce.order_service.application.usecase.GetOrderUseCase;
 import com.marcos.ecommerce.order_service.domain.exception.OrderNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +19,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(OrderController.class)
 @TestPropertySource(properties = {

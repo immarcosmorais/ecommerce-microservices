@@ -8,8 +8,8 @@ public enum OrderStatus {
     DELIVERED,
     CANCELLED;
 
-    public boolean canTransitionTo(OrderStatus newStatus){
-        return switch (this){
+    public boolean canTransitionTo(OrderStatus newStatus) {
+        return switch (this) {
             case PENDING -> newStatus == CONFIRMED || newStatus == CANCELLED;
             case CONFIRMED -> newStatus == PROCESSING || newStatus == CANCELLED;
             case PROCESSING -> newStatus == SHIPPED || newStatus == CANCELLED;

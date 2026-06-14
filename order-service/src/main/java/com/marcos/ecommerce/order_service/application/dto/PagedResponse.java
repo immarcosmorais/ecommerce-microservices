@@ -1,6 +1,6 @@
 package com.marcos.ecommerce.order_service.application.dto;
 
-import com.marcos.ecommerce.order_service.domain.model.PageResult;
+import com.marcos.ecommerce.order_service.domain.repository.PageResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
