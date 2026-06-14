@@ -1,8 +1,11 @@
 package com.marcos.ecommerce.payment_service.infrastructure.messaging;
 
 import com.marcos.ecommerce.payment_service.application.messaging.command.ProcessPaymentCommand;
+import com.marcos.ecommerce.payment_service.application.messaging.event.PaymentApprovedEvent;
 import com.marcos.ecommerce.payment_service.application.port.PaymentEventPublisher;
 import com.marcos.ecommerce.payment_service.application.usecase.ProcessPaymentUseCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +14,7 @@ public class ProcessPaymentConsumer {
 
     private final ProcessPaymentUseCase processPaymentUseCase;
     private final PaymentEventPublisher publisher;
+    private static final Logger log = LoggerFactory.getLogger(ProcessPaymentConsumer.class);
 
     public ProcessPaymentConsumer(ProcessPaymentUseCase processPaymentUseCase, PaymentEventPublisher publisher) {
         this.processPaymentUseCase = processPaymentUseCase;
@@ -21,7 +25,8 @@ public class ProcessPaymentConsumer {
     public void onProcessPayment(ProcessPaymentCommand command) {
         boolean approved = processPaymentUseCase.execute(command.orderId(), command.amount());
         if (approved) {
-            publisher.paymentApproved(command.orderId());
+            log.info("Received command from topic process-payment {}", command.orderId());
+            publisher.paymentApproved(new PaymentApprovedEvent(command.orderId()));
         }
     }
 
