@@ -2,6 +2,7 @@ package com.marcos.ecommerce.payment_service.infrastructure.messaging;
 
 import com.marcos.ecommerce.payment_service.application.messaging.command.ProcessPaymentCommand;
 import com.marcos.ecommerce.payment_service.application.messaging.event.PaymentApprovedEvent;
+import com.marcos.ecommerce.payment_service.application.messaging.event.PaymentFailedEvent;
 import com.marcos.ecommerce.payment_service.application.port.PaymentEventPublisher;
 import com.marcos.ecommerce.payment_service.application.usecase.ProcessPaymentUseCase;
 import org.slf4j.Logger;
@@ -23,10 +24,13 @@ public class ProcessPaymentConsumer {
 
     @KafkaListener(topics = "process-payment", groupId = "payment-group")
     public void onProcessPayment(ProcessPaymentCommand command) {
+        log.info("Received command from topic process-payment {}", command.orderId());
         boolean approved = processPaymentUseCase.execute(command.orderId(), command.amount());
         if (approved) {
-            log.info("Received command from topic process-payment {}", command.orderId());
             publisher.paymentApproved(new PaymentApprovedEvent(command.orderId()));
+        } else {
+            log.info("Payment FAILED for orderId={}, amount={}", command.orderId(), command.amount());
+            publisher.paymentFailed(new PaymentFailedEvent(command.orderId()));
         }
     }
 

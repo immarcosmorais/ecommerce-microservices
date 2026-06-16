@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class ProcessPaymentUseCase {
 
     public boolean execute(Long orderId, BigDecimal amount) {
-        return true;
+        return amount.compareTo(new BigDecimal("500")) < 0;
     }
 
 }
