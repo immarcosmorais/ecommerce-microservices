@@ -13,9 +13,9 @@ import java.util.Optional;
 @Repository
 public class JpaOrderRepository implements OrderRepository {
 
-    private final SpringDataProductRepository repository;
+    private final SpringDataOrderRepository repository;
 
-    public JpaOrderRepository(SpringDataProductRepository repository) {
+    public JpaOrderRepository(SpringDataOrderRepository repository) {
         this.repository = repository;
     }
 
@@ -33,7 +33,7 @@ public class JpaOrderRepository implements OrderRepository {
 
     @Override
     public Optional<Order> findById(Long id) {
-        return repository.findById(id).map(OrderJpaEntity::toDomain);
+        return repository.findByIdWithItems(id).map(OrderJpaEntity::toDomain);
     }
 
     @Override
