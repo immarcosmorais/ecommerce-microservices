@@ -2,25 +2,29 @@ package com.marcos.ecommerce.orchestrator_service.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class OrderSaga extends AbstractModel {
 
     private final Long orderId;
     private SagaStatus status;
     private final BigDecimal totalAmount;
+    private final List<SagaItem> items;
 
-    public OrderSaga(Long orderId, BigDecimal totalAmount) {
+    public OrderSaga(Long orderId, BigDecimal totalAmount, List<SagaItem> items) {
         this.orderId = orderId;
+        this.items = items;
         this.status = SagaStatus.STARTED;
         this.totalAmount = totalAmount;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public OrderSaga(Long orderId, SagaStatus status, BigDecimal totalAmount) {
+    public OrderSaga(Long orderId, SagaStatus status, BigDecimal totalAmount, List<SagaItem> items) {
         this.orderId = orderId;
         this.status = status;
         this.totalAmount = totalAmount;
+        this.items = items;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -64,7 +68,14 @@ public class OrderSaga extends AbstractModel {
         return totalAmount;
     }
 
+    public List<SagaItem> getItems() {
+        return items;
+    }
+
     public void complete() {
         transitionTo(SagaStatus.COMPLETED, SagaStatus.PAID);
+    }
+
+    public record SagaItem(Long productId, int quantity) {
     }
 }

@@ -5,6 +5,7 @@ import com.marcos.ecommerce.orchestrator_service.domain.model.SagaStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "order_saga")
@@ -20,6 +21,10 @@ public class OrderSagaJpaEntity extends AbstractEntity {
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
+    @Column(name = "items", nullable = false, columnDefinition = "TEXT")
+    @Convert(converter = SagaItemsConverter.class)
+    private List<OrderSaga.SagaItem> items;
+
     protected OrderSagaJpaEntity() {
     }
 
@@ -31,11 +36,12 @@ public class OrderSagaJpaEntity extends AbstractEntity {
         sagaJpaEntity.createdAt = orderSaga.getCreatedAt();
         sagaJpaEntity.updatedAt = orderSaga.getUpdatedAt();
         sagaJpaEntity.totalAmount = orderSaga.getTotalAmount();
+        sagaJpaEntity.items = orderSaga.getItems();
         return sagaJpaEntity;
     }
 
     public OrderSaga toDomain() {
-        OrderSaga saga = new OrderSaga(this.orderId, this.status, this.totalAmount);
+        OrderSaga saga = new OrderSaga(this.orderId, this.status, this.totalAmount, this.items);
         saga.setId(this.id);
         return saga;
     }

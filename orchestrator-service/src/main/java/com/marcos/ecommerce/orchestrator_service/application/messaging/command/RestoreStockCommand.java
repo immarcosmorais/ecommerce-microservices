@@ -1,4 +1,8 @@
 package com.marcos.ecommerce.orchestrator_service.application.messaging.command;
 
-public record RestoreStockCommand() {
+import java.util.List;
+
+public record RestoreStockCommand(Long orderId, List<Item> items) {
+    public record Item(Long productId, int quantity) {
+    }
 }

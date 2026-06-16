@@ -1,8 +1,6 @@
 package com.marcos.ecommerce.orchestrator_service.infrastructure.messaging;
 
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ConfirmOrderCommand;
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ProcessPaymentCommand;
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ReserveStockCommand;
+import com.marcos.ecommerce.orchestrator_service.application.messaging.command.*;
 import com.marcos.ecommerce.orchestrator_service.application.port.SagaCommandPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +30,17 @@ public class KafkaSagaCommandPublisher implements SagaCommandPublisher {
     @Override
     public void confirmOrder(ConfirmOrderCommand c) {
         publish("confirm-order", String.valueOf(c.orderId()), c);
+    }
+
+    @Override
+    public void restoreStock(RestoreStockCommand command) {
+        publish("restore-stock", String.valueOf(command.orderId()), command);
+    }
+
+    @Override
+    public void cancelOrder(CancelOrderCommand command) {
+        publish("cancel-order", String.valueOf(command.orderId()), command);
+
     }
 
     private <T> void publish(String topic, String key, T command) {
