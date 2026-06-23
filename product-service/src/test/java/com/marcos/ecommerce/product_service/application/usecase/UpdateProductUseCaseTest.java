@@ -55,7 +55,7 @@ class UpdateProductUseCaseTest {
     @DisplayName("deve atualizar produto e retornar response com dados corretos")
     void shouldUpdateProductAndReturnResponse() {
         // Arrange
-        Product productSaved = buildProduct() ;
+        Product productSaved = buildProduct();
         PutProductRequest request = buildPutRequest();
         when(productRepository.findById(any())).thenReturn(Optional.of(productSaved));
         when(productRepository.save(any(Product.class))).thenReturn(productSaved);
@@ -77,7 +77,7 @@ class UpdateProductUseCaseTest {
     void shouldApplyNewDataToDomainBeforeSaving() {
         // Arrange — ArgumentCaptor inspeciona o produto passado ao save
         ArgumentCaptor<Product> captor = ArgumentCaptor.forClass(Product.class);
-        Product existingProduct = buildProduct() ;
+        Product existingProduct = buildProduct();
         PutProductRequest request = new PutProductRequest("Teclado Mecânico", "Nova desc", new BigDecimal("799.00"));
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(existingProduct));
@@ -97,7 +97,7 @@ class UpdateProductUseCaseTest {
     void shouldCallFindByIdAndSaveExactlyOnce() {
         // Arrange
         PutProductRequest request = buildPutRequest();
-        Product productSaved = buildProduct() ;
+        Product productSaved = buildProduct();
         when(productRepository.save(any(Product.class))).thenReturn(productSaved);
         when(productRepository.findById(any())).thenReturn(Optional.of(productSaved));
 

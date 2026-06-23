@@ -1,9 +1,9 @@
 package com.marcos.ecommerce.orchestrator_service.infrastructure.messaging;
 
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ConfirmOrderCommand;
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ProcessPaymentCommand;
-import com.marcos.ecommerce.orchestrator_service.application.messaging.command.ReserveStockCommand;
+import com.marcos.ecommerce.orchestrator_service.application.messaging.command.*;
 import com.marcos.ecommerce.orchestrator_service.application.port.SagaCommandPublisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class KafkaSagaCommandPublisher implements SagaCommandPublisher {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private static final Logger log = LoggerFactory.getLogger(KafkaSagaCommandPublisher.class);
 
     public KafkaSagaCommandPublisher(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -18,16 +19,33 @@ public class KafkaSagaCommandPublisher implements SagaCommandPublisher {
 
     @Override
     public void reserveStock(ReserveStockCommand c) {
-        kafkaTemplate.send("reserve-stock", String.valueOf(c.orderId()), c);
+        publish("reserve-stock", String.valueOf(c.orderId()), c);
     }
 
     @Override
     public void processPayment(ProcessPaymentCommand c) {
-        kafkaTemplate.send("process-payment", String.valueOf(c.orderId()), c);
+        publish("process-payment", String.valueOf(c.orderId()), c);
     }
 
     @Override
     public void confirmOrder(ConfirmOrderCommand c) {
-        kafkaTemplate.send("confirm-order", String.valueOf(c.orderId()), c);
+        publish("confirm-order", String.valueOf(c.orderId()), c);
     }
+
+    @Override
+    public void restoreStock(RestoreStockCommand command) {
+        publish("restore-stock", String.valueOf(command.orderId()), command);
+    }
+
+    @Override
+    public void cancelOrder(CancelOrderCommand command) {
+        publish("cancel-order", String.valueOf(command.orderId()), command);
+
+    }
+
+    private <T> void publish(String topic, String key, T command) {
+        log.info("Publishing command to topic: {}, key: {}", topic, key);
+        kafkaTemplate.send(topic, key, command);
+    }
+
 }

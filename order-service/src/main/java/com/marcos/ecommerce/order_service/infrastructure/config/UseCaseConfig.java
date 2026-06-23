@@ -1,6 +1,7 @@
 package com.marcos.ecommerce.order_service.infrastructure.config;
 
 import com.marcos.ecommerce.order_service.application.usecase.CancelOrderUseCase;
+import com.marcos.ecommerce.order_service.application.usecase.ConfirmOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.CreateOrderUseCase;
 import com.marcos.ecommerce.order_service.application.usecase.GetOrderUseCase;
 import com.marcos.ecommerce.order_service.domain.event.OrderEventPublisher;
@@ -24,6 +25,11 @@ public class UseCaseConfig {
     @Bean
     public CancelOrderUseCase cancelOrderUseCase(OrderRepository repository) {
         return new CancelOrderUseCase(repository);
+    }
+
+    @Bean
+    public ConfirmOrderUseCase confirmOrderUseCase(OrderRepository repository) {
+        return new ConfirmOrderUseCase(repository);
     }
 
 }

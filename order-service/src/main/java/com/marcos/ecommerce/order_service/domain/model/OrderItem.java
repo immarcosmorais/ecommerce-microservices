@@ -10,7 +10,8 @@ public class OrderItem {
     private Integer quantity;
     private BigDecimal unitPrice;
 
-    protected OrderItem(){}
+    protected OrderItem() {
+    }
 
     public OrderItem(Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
         ValidateFields.validateLong(productId, "productId");

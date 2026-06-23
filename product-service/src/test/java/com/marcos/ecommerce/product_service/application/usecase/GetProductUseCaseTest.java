@@ -3,8 +3,8 @@ package com.marcos.ecommerce.product_service.application.usecase;
 import com.marcos.ecommerce.product_service.application.dto.PagedResponse;
 import com.marcos.ecommerce.product_service.application.dto.ProductResponse;
 import com.marcos.ecommerce.product_service.domain.exception.ProductNotFoundException;
-import com.marcos.ecommerce.product_service.domain.model.PageResult;
 import com.marcos.ecommerce.product_service.domain.model.Product;
+import com.marcos.ecommerce.product_service.domain.repository.PageResult;
 import com.marcos.ecommerce.product_service.domain.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,9 +19,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,7 +48,7 @@ class GetProductUseCaseTest {
     @DisplayName("deve buscar produto por id e retornar response com dados corretos")
     void shouldFindByIdAndReturnResponse() {
         // Arrange
-        Product savedProduct = buildProduct() ;
+        Product savedProduct = buildProduct();
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(savedProduct));
 
         // Act — T6: corrigido finById → findById
@@ -82,7 +80,7 @@ class GetProductUseCaseTest {
     @DisplayName("deve chamar repository.findById exatamente uma vez sem mais interações")
     void shouldCallFindByIdExactlyOnce() {
         // Arrange
-        Product savedProduct = buildProduct() ;
+        Product savedProduct = buildProduct();
         when(productRepository.findById(anyLong())).thenReturn(Optional.of(savedProduct));
 
         // Act
@@ -99,7 +97,7 @@ class GetProductUseCaseTest {
     @DisplayName("deve retornar todos os produtos paginados em response")
     void shouldFindAllProductsAndReturnPagedResponse() {
         // Arrange
-        Product savedProduct = buildProduct() ;
+        Product savedProduct = buildProduct();
         PageResult<Product> page = new PageResult<>(List.of(savedProduct), 0, 1, 1L, 1);
         when(productRepository.findAll(anyInt(), anyInt())).thenReturn(page);
 

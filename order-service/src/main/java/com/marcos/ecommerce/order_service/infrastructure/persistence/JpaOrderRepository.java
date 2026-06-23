@@ -2,7 +2,7 @@ package com.marcos.ecommerce.order_service.infrastructure.persistence;
 
 import com.marcos.ecommerce.order_service.domain.model.Order;
 import com.marcos.ecommerce.order_service.domain.repository.OrderRepository;
-import com.marcos.ecommerce.order_service.domain.model.PageResult;
+import com.marcos.ecommerce.order_service.domain.repository.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
@@ -13,9 +13,9 @@ import java.util.Optional;
 @Repository
 public class JpaOrderRepository implements OrderRepository {
 
-    private final SpringDataProductRepository repository;
+    private final SpringDataOrderRepository repository;
 
-    public JpaOrderRepository(SpringDataProductRepository repository) {
+    public JpaOrderRepository(SpringDataOrderRepository repository) {
         this.repository = repository;
     }
 
@@ -33,7 +33,7 @@ public class JpaOrderRepository implements OrderRepository {
 
     @Override
     public Optional<Order> findById(Long id) {
-        return repository.findById(id).map(OrderJpaEntity::toDomain);
+        return repository.findByIdWithItems(id).map(OrderJpaEntity::toDomain);
     }
 
     @Override

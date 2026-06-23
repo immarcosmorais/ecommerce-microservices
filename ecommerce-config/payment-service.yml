@@ -4,13 +4,6 @@ server:
 spring:
   kafka:
     bootstrap-servers: localhost:9092
-#    consumer:
-#      group-id: payment-group
-#      auto-offset-reset: earliest
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
-#      properties:
-#        spring.json.trusted.packages: "*"
 
 eureka:
   client:
@@ -21,4 +14,19 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info, circuitbreakers
+  health:
+    circuitbreakers:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: k8s
+  kafka:
+    bootstrap-servers: kafka:9092
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/

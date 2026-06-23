@@ -2,32 +2,36 @@ package com.marcos.ecommerce.orchestrator_service.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class OrderSaga extends AbstractModel{
+public class OrderSaga extends AbstractModel {
 
-    private Long orderId;
+    private final Long orderId;
     private SagaStatus status;
-    private BigDecimal totalAmount;
+    private final BigDecimal totalAmount;
+    private final List<SagaItem> items;
 
-    public OrderSaga(Long orderId, BigDecimal totalAmount) {
+    public OrderSaga(Long orderId, BigDecimal totalAmount, List<SagaItem> items) {
         this.orderId = orderId;
+        this.items = items;
         this.status = SagaStatus.STARTED;
         this.totalAmount = totalAmount;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public OrderSaga(Long orderId, SagaStatus status, BigDecimal totalAmount) {
+    public OrderSaga(Long orderId, SagaStatus status, BigDecimal totalAmount, List<SagaItem> items) {
         this.orderId = orderId;
         this.status = status;
         this.totalAmount = totalAmount;
+        this.items = items;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    private void transitionTo(SagaStatus target, SagaStatus... allowedFrom){
-        for(SagaStatus from : allowedFrom){
-            if(this.status == from){
+    private void transitionTo(SagaStatus target, SagaStatus... allowedFrom) {
+        for (SagaStatus from : allowedFrom) {
+            if (this.status == from) {
                 this.status = target;
                 this.updatedAt = LocalDateTime.now();
                 return;
@@ -40,15 +44,15 @@ public class OrderSaga extends AbstractModel{
         transitionTo(SagaStatus.STOCK_RESERVED, SagaStatus.STARTED);
     }
 
-    public void markPaid(){
+    public void markPaid() {
         transitionTo(SagaStatus.PAID, SagaStatus.STOCK_RESERVED);
     }
 
-    public void startCompensation(){
+    public void startCompensation() {
         transitionTo(SagaStatus.COMPENSATING, SagaStatus.STOCK_RESERVED, SagaStatus.PAID);
     }
 
-    public void cancel(){
+    public void cancel() {
         transitionTo(SagaStatus.CANCELLED, SagaStatus.COMPENSATING, SagaStatus.STARTED);
     }
 
@@ -64,7 +68,14 @@ public class OrderSaga extends AbstractModel{
         return totalAmount;
     }
 
+    public List<SagaItem> getItems() {
+        return items;
+    }
+
     public void complete() {
         transitionTo(SagaStatus.COMPLETED, SagaStatus.PAID);
+    }
+
+    public record SagaItem(Long productId, int quantity) {
     }
 }

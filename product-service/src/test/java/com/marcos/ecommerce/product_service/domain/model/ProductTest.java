@@ -13,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @DisplayName("Product — testes de domínio")
 class ProductTest {
 
-    private static Product buildProduct(Integer stockQuantity){
+    private static Product buildProduct(Integer stockQuantity) {
         Product product = new Product("Notebook", "Desc", new BigDecimal("5000.00"), stockQuantity);
         product.setId(1L);
         return product;

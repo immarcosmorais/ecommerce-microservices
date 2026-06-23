@@ -31,4 +31,5 @@ public record OrderResponse(
         @Schema(description = "Data e hora de criação do pedido")
         LocalDateTime createdAt
 
-) {}
+) {
+}

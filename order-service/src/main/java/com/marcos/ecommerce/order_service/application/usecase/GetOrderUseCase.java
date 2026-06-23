@@ -1,13 +1,12 @@
 package com.marcos.ecommerce.order_service.application.usecase;
 
 import com.marcos.ecommerce.order_service.application.dto.OrderResponse;
+import com.marcos.ecommerce.order_service.application.dto.PagedResponse;
 import com.marcos.ecommerce.order_service.application.mapper.OrderMapper;
 import com.marcos.ecommerce.order_service.domain.exception.OrderNotFoundException;
 import com.marcos.ecommerce.order_service.domain.model.Order;
 import com.marcos.ecommerce.order_service.domain.repository.OrderRepository;
-import com.marcos.ecommerce.order_service.application.dto.PagedResponse;
-
-import com.marcos.ecommerce.order_service.domain.model.PageResult;
+import com.marcos.ecommerce.order_service.domain.repository.PageResult;
 
 import java.util.List;
 

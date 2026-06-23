@@ -33,4 +33,9 @@ public class UseCaseConfig {
         return new DecreaseStockUseCase(repository);
     }
 
+    @Bean
+    public RestoreStockUseCase restoreStockUseCase(ProductRepository repository) {
+        return new RestoreStockUseCase(repository);
+    }
+
 }

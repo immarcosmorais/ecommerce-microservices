@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
-public class ProductJpaEntity extends AbstractEntity{
+public class ProductJpaEntity extends AbstractEntity {
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -20,7 +20,8 @@ public class ProductJpaEntity extends AbstractEntity{
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
 
-    protected ProductJpaEntity() {}
+    protected ProductJpaEntity() {
+    }
 
     public static ProductJpaEntity fromDomain(Product product) {
         ProductJpaEntity entity = new ProductJpaEntity();

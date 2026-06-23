@@ -9,7 +9,8 @@ import java.util.List;
 
 public class OrderMapper {
 
-    private OrderMapper() {}
+    private OrderMapper() {
+    }
 
     public static OrderResponse toResponse(Order order) {
         List<OrderItemResponse> itemResponses = order.getItems().stream()

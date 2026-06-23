@@ -1,7 +1,7 @@
 package com.marcos.ecommerce.product_service.infrastructure.persistence;
 
-import com.marcos.ecommerce.product_service.domain.model.PageResult;
 import com.marcos.ecommerce.product_service.domain.model.Product;
+import com.marcos.ecommerce.product_service.domain.repository.PageResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

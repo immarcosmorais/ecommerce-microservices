@@ -10,11 +10,11 @@ public class CreateProductUseCase {
 
     private final ProductRepository productRepository;
 
-    public CreateProductUseCase(ProductRepository productRepository){
+    public CreateProductUseCase(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public ProductResponse execute(PostProductRequest request){
+    public ProductResponse execute(PostProductRequest request) {
         Product product = ProductMapper.toDomain(request);
         Product saved = productRepository.save(product);
         return ProductMapper.toResponse(saved);
