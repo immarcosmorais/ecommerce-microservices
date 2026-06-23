@@ -22,12 +22,8 @@ spec:
           env:
             - name: SPRING_CONFIG_IMPORT
               value: "optional:configserver:http://config-server:8888"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-saga:5432/saga_db"
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: "http://discovery-server:8761/eureka/"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "k8s"
           readinessProbe:
             httpGet:
               path: /actuator/health
